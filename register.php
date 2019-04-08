@@ -1,51 +1,44 @@
 <?php
-//connect to database
-include ("config.php");
 
-if ($conn === false) {
-    die("Error: Could not connect");
-}
-//
+
 if (isset($_POST['register'])) {
+    //connect to database
+    include_once("config.php");
 
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
+
+    $name = mysqli_real_escape_string($conn, $_POST['fname']);
     $surname = mysqli_real_escape_string($conn, $_POST['surname']);
     $course = mysqli_real_escape_string($conn, $_POST['course']);
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
-//    $password2 = mysqli_real_escape_string($conn,$_POST['password2']);
 
     //hash password before storing for security
     $hashedpwd = password_hash($password,PASSWORD_DEFAULT);
+    // $password2 = mysqli_real_escape_string($conn,$_POST['password2']);*/
+
+    // check connection
+    if ($conn === false) {
+        die("Error: Could not connect");
+    } else {
+
+        //error handlers
 
 
-    //errror handlers
 
-
-
-    //insert into database
-    $sql = "INSERT INTO student(name,surname,course,phone,email,password)
+        //insert into database
+        $sql = "INSERT INTO student (fname, surname, course, phone, email, password)
          VALUES ('$name','$surname','$course','$phone','$email','$hashedpwd')";
 
-  $sql = mysqli_query($conn,$sql);
+        if (mysqli_query($conn, $sql)) {
+            header("location: index.php");
+        } else {
+            echo "Error: Could not Execute";
+        }
 
-    if ($sql) {
-    header("location/index.php");
-    }
-    else{
-        echo "Error: Could not Execute";
     }
 }
 
- /*   if (mysqli_query($conn, $sql)) {
-        header('location/index.php');
-    } else {
-        echo "Error: Could not Execute" . mysqli_error($conn);
-    }
-}*/
-//close connection
-mysqli_close($conn);
 ?>
 
 
@@ -88,11 +81,11 @@ mysqli_close($conn);
             </div>
             <div class="col-sm-6">
                 <div class="segment2">
-                    <form action="index.php" method="post">
+                    <form action="register.php" method="post">
                         <table class="tbl">
                             <tr>
                                 <td>Name</td>
-                                <td><input name="name" type="text" id="firstname" required></td>
+                                <td><input name="fname" type="text" id="firstname" required></td>
                             </tr>
                             <tr>
                                 <td>Surname</td>
