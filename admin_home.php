@@ -23,12 +23,12 @@
 
 
     <div class="main">
-        <h1>Course Materials</h1>
 
 
 
-            </div>
-        </div>
+
+    </div>
+</div>
 
 
 <footer class="footeroption">
@@ -38,3 +38,6 @@
 
 </body>
 </html>
+
+
+

@@ -1,7 +1,109 @@
-/*STYLE FOR index.html*/
-.indextop{
-    margin-top: 200px; !important;
-    margin-top: 200px; !important;
-    position: relative;
-    top: 40px;
+/*STYLE FOR index.php*/
+body{
+    font-family: "Adobe Hebrew";
+}
+ .headeroption{
+    background: #9fcdff;
+    border-bottom: 2px solid #444444;
+    height: 100px;
+     color: #fff;
+     text-align: center;
+}
+
+.footeroption{
+    background:#9fcdff;
+    color:#6c757d;
+    text-align:center;
+    padding:20px;
+    border-top: 2px solid #444444;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+.headeroption h2{
+    margin-top:0;
+    font-family:"Adobe Hebrew";
+    font-size:44px;
+    padding-top: 20px;
+}
+ .footeroption h2{
+    margin-top:0;
+    font-size:24px;
+     font-family:"Adobe Hebrew";
+}
+
+.main h1 {
+    background: #f4f4f4 none repeat scroll 0 0;
+    box-shadow: 2px 2px 0 1px #999;
+    color: #666;
+    margin: 10px auto 25px;
+    padding: 4px;
+    text-align: center;
+    width: 820px;
+}
+.menu{
+    overflow: hidden;
+    position:absolute;
+    right:50px;
+
+}
+.menu ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.menu ul li{
+    display: block;
+    float: left;
+}
+.menu ul li a{
+    border: 1px solid #bdbdbd;
+    border-radius: 9px;
+    color: #444;
+    display: block;
+    margin: 0 5px 5px;
+    padding: 1px 10px 3px;
+    text-decoration: none;
+    text-align: center;
+
+}
+.menu ul li a:hover{
+    color:#ffffff;
+    border: 1px solid black;
+    background-color:#0f6674;
+}
+.segment1 {
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    float:left;
+    min-height: 225px;
+    padding: 20px;
+    width: 357px;
+
+}
+.segment2{
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    float: left;
+    min-height: 225px;
+    padding: 20px;
+    width: 357px;
+}
+.success{
+    color:green;}
+.error,.empty,.disable {
+    color: red;
+}
+p{margin:0}
+input[type="text"], input[type="password"], input[type="int"]{
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    padding: 3px;
+    width: 238px;
+}
+input[type="submit"] {
+    cursor: pointer;
+    font-size: 15px;
+    padding: 1px 10px;
 }
