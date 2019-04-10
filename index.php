@@ -4,6 +4,7 @@
 //connect to database
 include ("config.php");
 
+//check connection
 if ($conn === false) {
     die("Error: Could not connect");
 }
@@ -15,11 +16,11 @@ if (isset($_POST['login'])) {
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
 
-
     $sql = mysqli_query("SELECT * FROM student WHERE (email = '$email' && password = '$password')");
          
     $result = mysqli_query($conn,$sql) or die(mysqli_error($conn));
-    $resultcheck = mysqli_num_rows($query);
+
+    $resultcheck = mysqli_num_rows($result);
 
     if ($resultcheck == 1){
   echo  $_SESSION['guest'] = $username;

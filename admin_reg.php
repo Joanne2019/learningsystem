@@ -1,38 +1,45 @@
-<?php                //Admin login details ---- email = joanne@gmail.com  ----->password = joanne
-
-// http://codewithawa.com/posts/admin-and-user-login-in-php-and-mysql-database
-
+<?php
 //connect to database
-include ("config.php");
+include_once("config.php");
 
-//check connection
-if ($conn === false) {
-    die("Error: Could not connect");
-}
+if (isset($_POST['register'])) {
 
-if(isset($_POST['login'])){
-    $email = mysqli_real_escape_string($conn,$_POST['email']);
-    $password = mysqli_real_escape_string($conn,$_POST['password']);
+    session_start();
 
-    $sql = mysqli_query("SELECT * FROM admin WHERE (email = '$email' && password = '$password')");
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    $result = mysqli_query($conn,$sql) or die (mysqli_error($conn));
+        //hash password before storing for security
+        $hashedpwd = password_hash($password,PASSWORD_DEFAULT);
+         // check connection
+         if ($conn === false) {
+             die("Error: Could not connect");
+         } else {
 
-    $resultcheck = mysqli_num_rows($result);
 
 
-    if ($resultcheck == 1){
-      //  echo  $_SESSION['guest'] = $username;
-        header("location:admin_home.php");
-    }
-    else{
-        echo  "Error, Login failed";
+        //insert into database
+        $sql = "INSERT INTO admin (email, password)
+         VALUES ('$email','$hashedpwd')";
+
+
+        if (mysqli_query($conn, $sql)) {
+            header("location:admin.php");
+        }
+        else{
+           echo "Error: Could not Execute";
+        }
+
+
+
+
     }
 
 }
 
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -57,38 +64,36 @@ if(isset($_POST['login'])){
 <div class="container-fluid">
     <!--page contents-->
 
-
     <div class="main">
-        <h1>E-Learning System - Administrator</h1>
-
-
+        <h1> Registration</h1>
 
         <div class="row">
             <div class="col-sm-6"
             <div class="segment1">
-                <img src="images/admin.jpg" height="245" style=" position: relative; left: 30%;">
+                <img src="images/login.png" height="285" style=" position: relative; left: 30%; border-radius: 9px">
             </div>
             <div class="col-sm-6">
                 <div class="segment2">
-                    <form action="" method="post">
+                    <form action="admin_reg.php" method="post">
                         <table class="tbl">
+
                             <tr>
                                 <td>Email</td>
-                                <td><input name="email" type="text" id="email"></td>
+                                <td><input name="email" type="text" id="email" required></td>
                             </tr>
-                            <hr>
                             <tr>
                                 <td>Password </td>
-                                <td><input name="password" type="password" id="password"></td>
+                                <td><input name="password" type="password" id="password" required></td>
                             </tr>
 
                             <tr>
                                 <td></td>
-                                <td><input type="submit" id="loginsubmit" value="Login" name="login">
+                                <td><input type="submit" id="regsubmit" value="Signup" name="register">
                                 </td>
                             </tr>
                         </table>
                     </form>
+                    <p>Already Registered? <a href="admin.php">Login</a> Here </p>
                     <span class="empty" style="display: none;">Field must not be empty !</span>
                     <span class="error" style="display: none;">Email or Password not matched !</span>
                     <span class="disable" style="display: none;">User Id disabled !</span>
