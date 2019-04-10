@@ -1,10 +1,10 @@
 <?php
-
+//connect to database
+include_once("config.php");
 
 if (isset($_POST['register'])) {
-    //connect to database
-    include_once("config.php");
 
+   session_start();
 
     $name = mysqli_real_escape_string($conn, $_POST['fname']);
     $surname = mysqli_real_escape_string($conn, $_POST['surname']);
@@ -12,15 +12,15 @@ if (isset($_POST['register'])) {
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
-
+    $password2 = mysqli_real_escape_string($conn,$_POST['password_rep']);
+    //checking that the passwords match
+    if ($password == $password2){
     //hash password before storing for security
     $hashedpwd = password_hash($password,PASSWORD_DEFAULT);
-    // $password2 = mysqli_real_escape_string($conn,$_POST['password2']);*/
-
-    // check connection
+   /* // check connection
     if ($conn === false) {
         die("Error: Could not connect");
-    } else {
+    } else {*/
 
         //error handlers
 
@@ -30,13 +30,20 @@ if (isset($_POST['register'])) {
         $sql = "INSERT INTO student (fname, surname, course, phone, email, password)
          VALUES ('$name','$surname','$course','$phone','$email','$hashedpwd')";
 
+
         if (mysqli_query($conn, $sql)) {
             header("location: index.php");
-        } else {
-            echo "Error: Could not Execute";
         }
+        else{
+        $_SESSION['message'] = "The two passwords do not match";
+        header("location:index.php");
+    }
+
+
+
 
     }
+
 }
 
 ?>
@@ -66,8 +73,8 @@ if (isset($_POST['register'])) {
     <!--page contents-->
     <div class="menu">
         <ul>
-            <li><a href="#">Register</a> </li>
-            <li><a href="#">Login</a></li>
+            <li><a href="register.php">Register</a> </li>
+            <li><a href="index.php">Login</a></li>
         </ul>
     </div>
 
@@ -106,6 +113,10 @@ if (isset($_POST['register'])) {
                             <tr>
                                 <td>Password </td>
                                 <td><input name="password" type="password" id="password" required></td>
+                            </tr>
+                            <tr>
+                                <td>Confirm Password </td>
+                                <td><input name="password_rep" type="password" id="password" required></td>
                             </tr>
 
                             <tr>

@@ -60,8 +60,8 @@ mysqli_close($conn);
      <!--page contents-->
         <div class="menu">
             <ul>
-                <li><a href="#">Register</a> </li>
-                <li><a href="#">Login</a></li>
+                <li><a href="register.php">Register</a> </li>
+                <li><a href="index.php">Login</a></li>
             </ul>
         </div>
 
