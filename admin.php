@@ -13,15 +13,11 @@ if(isset($_POST['login'])){
     $email = mysqli_real_escape_string($conn,$_POST['email']);
     $password = mysqli_real_escape_string($conn,$_POST['password']);
 
-    $sql = mysqli_query("SELECT * FROM admin WHERE (email = '$email' && password = '$password')");
+    $sql = "SELECT * FROM admin WHERE (email = '$email' && password = '$password')";
 
     $result = mysqli_query($conn,$sql) or die (mysqli_error($conn));
 
-    $resultcheck = mysqli_num_rows($result);
-
-
-    if ($resultcheck == 1){
-      //  echo  $_SESSION['guest'] = $username;
+    if(mysqli_num_rows($result) ==1){
         header("location:admin_home.php");
     }
     else{
