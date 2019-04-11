@@ -13,16 +13,28 @@ if(isset($_POST['login'])){
     $email = mysqli_real_escape_string($conn,$_POST['email']);
     $password = mysqli_real_escape_string($conn,$_POST['password']);
 
-    $sql = "SELECT * FROM admin WHERE (email = '$email' && password = '$password')";
+    $sql = "SELECT * FROM admin WHERE email = '$email'";
 
     $result = mysqli_query($conn,$sql) or die (mysqli_error($conn));
 
-    if(mysqli_num_rows($result) ==1){
+    $resultcheck = mysqli_num_rows($result);
+
+    if ($resultcheck > 0) {
+        while ($row = mysqli_fetch_array($result)) {
+            if (password_verify($password, $row['password'])) {
+                header("location:admin_home.php");
+            } else {
+                echo "Error, Login failed";
+            }
+        }
+    }
+
+    /*if(mysqli_num_rows($result) == 1){
         header("location:admin_home.php");
     }
     else{
         echo  "Error, Login failed";
-    }
+    }*/
 
 }
 
@@ -65,7 +77,7 @@ if(isset($_POST['login'])){
             </div>
             <div class="col-sm-6">
                 <div class="segment2">
-                    <form action="" method="post">
+                    <form action="admin.php" method="post">
                         <table class="tbl">
                             <tr>
                                 <td>Email</td>

@@ -10,24 +10,27 @@ if ($conn === false) {
 }
 
 if (isset($_POST['login'])) {
-   // session_start();
+    // session_start();
 
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
 
-    $sql = mysqli_query("SELECT * FROM student WHERE (email = '$email' && password = '$password')");
-         
-    $result = mysqli_query($conn,$sql) or die(mysqli_error($conn));
+    $sql = "SELECT * FROM student WHERE email = '$email'";
+
+    $result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
     $resultcheck = mysqli_num_rows($result);
 
-    if ($resultcheck == 1){
-  echo  $_SESSION['guest'] = $username;
-    header("location:index.php");
-    }
-    else{
-      echo  "Error, Login failed";
+    if ($resultcheck > 0) {
+        while ($row = mysqli_fetch_array($result)) {
+            if (password_verify($password, $row['password'])) {
+                header("location:student_home.php");
+
+            } else {
+                echo "Error, Login failed";
+            }
+        }
     }
 }
 
@@ -71,7 +74,6 @@ mysqli_close($conn);
     <h1>E-Learning System - Login</h1>
 
 
-
 <div class="row">
     <div class="col-sm-6"
         <div class="segment1">
@@ -79,7 +81,7 @@ mysqli_close($conn);
         </div>
 <div class="col-sm-6">
         <div class="segment2">
-            <form action="student_home.php" method="post">
+            <form action="index.php" method="post">
                 <table class="tbl">
                     <tr>
                         <td>Email</td>
