@@ -107,3 +107,13 @@ input[type="submit"] {
     font-size: 15px;
     padding: 1px 10px;
 }
+.error{
+    width: 320px;
+    margin: 0px auto;
+    padding: 10px;
+    border: 1px solid red;
+    color: #dc3545;
+    background:#e9ecef;
+    border-radius: 5px;
+    text-align: left;
+}

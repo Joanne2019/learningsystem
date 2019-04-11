@@ -1,10 +1,14 @@
 <?php
+      session_start();
+$name = "";
+$surname = "";
+$errors = array();
 //connect to database
 include_once("config.php");
 
-if (isset($_POST['register'])) {
 
-   session_start();
+//if the register button is clicked
+if (isset($_POST['register'])) {
 
     $name = mysqli_real_escape_string($conn, $_POST['fname']);
     $surname = mysqli_real_escape_string($conn, $_POST['surname']);
@@ -12,39 +16,44 @@ if (isset($_POST['register'])) {
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
-    $password2 = mysqli_real_escape_string($conn,$_POST['password_rep']);
-    //checking that the passwords match
-    if ($password == $password2){
-    //hash password before storing for security
-    $hashedpwd = password_hash($password,PASSWORD_DEFAULT);
-   /* // check connection
-    if ($conn === false) {
-        die("Error: Could not connect");
-    } else {*/
+    $password2 = mysqli_real_escape_string($conn,$_POST['password2']);
 
-        //error handlers
-
-
-
-        //insert into database
-        $sql = "INSERT INTO student (fname, surname, course, phone, email, password)
-         VALUES ('$name','$surname','$course','$phone','$email','$hashedpwd')";
-
-
-        if (mysqli_query($conn, $sql)) {
-            header("location: index.php");
-        }
-        else{
-        $_SESSION['message'] = "The two passwords do not match";
-        header("location:index.php");
+    //ensure form fields are filled properly
+    if(empty($name)){
+        array_push($errors,"Name is required");
+    }
+    if(empty($surname)){
+        array_push($errors,"Surname is required");
+    }
+    if(empty($course)){
+        array_push($errors,"Course is required");
+    }
+    if(empty($email)){
+        array_push($errors,"Email is required");
+    }
+    if(empty($password)){
+        array_push($errors,"Password is required");
+    }
+    if($password != $password2){
+        array_push($errors,"The two passwords do not match");
     }
 
+    // if there are no errors, save student to database
+    if (count($errors) == 0){
 
+        //hash password before storing for security
+        $hashedpwd = password_hash($password,PASSWORD_DEFAULT);
 
+        $sql = "INSERT INTO student(fname,surname,course,phone,email,password)
+                 VALUES ('$name','$surname','$course','$phone','$email','$hashedpwd')";
+        mysqli_query($conn,$sql);
+        $_SESSION['fname'] = $name;
+        $_SESSION['success'] = "You are now logged in";
+        header('location:index.php'); // redirect to home page
 
     }
-
 }
+
 
 ?>
 
@@ -82,41 +91,42 @@ if (isset($_POST['register'])) {
         <h1>E-Learning System - Registration</h1>
 
         <div class="row">
-            <div class="col-sm-6"
+            <div class="col-sm-4"
             <div class="segment1">
                 <img src="images/login.png" height="285" style=" position: relative; left: 30%; border-radius: 9px">
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="segment2">
                     <form action="register.php" method="post">
+
                         <table class="tbl">
                             <tr>
                                 <td>Name</td>
-                                <td><input name="fname" type="text" id="firstname" required></td>
+                                <td><input name="fname" type="text" id="firstname"></td>
                             </tr>
                             <tr>
                                 <td>Surname</td>
-                                <td><input name="surname" type="text" id="surname" required></td>
+                                <td><input name="surname" type="text" id="surname"></td>
                             </tr>
                             <tr>
                                 <td>Course</td>
-                                <td><input name="course" type="text" id="course" required></td>
+                                <td><input name="course" type="text" id="course"></td>
                             </tr>
                             <tr>
                                 <td>Phone</td>
-                                <td><input name="phone" type="int" id="phone" required></td>
+                                <td><input name="phone" type="int" id="phone"></td>
                             </tr>
                             <tr>
                                 <td>Email</td>
-                                <td><input name="email" type="text" id="email" required></td>
+                                <td><input name="email" type="text" id="email"></td>
                             </tr>
                             <tr>
                                 <td>Password </td>
-                                <td><input name="password" type="password" id="password" required></td>
+                                <td><input name="password" type="password" id="password"></td>
                             </tr>
                             <tr>
                                 <td>Confirm Password </td>
-                                <td><input name="password_rep" type="password" id="password" required></td>
+                                <td><input name="password2" type="password" id="password"></td>
                             </tr>
 
                             <tr>
@@ -132,8 +142,12 @@ if (isset($_POST['register'])) {
                     <span class="disable" style="display: none;">User Id disabled !</span>
                 </div>
             </div>
-        </div>
+            <div class="col-sm-4">
+            <!--Display validation errors here-->
+            <?php include ('errors.php'); ?>
 
+        </div>
+        </div>
     </div>
 </div>
 

@@ -1,6 +1,5 @@
 <?php                //Admin login details ---- email = joanne@gmail.com  ----->password = joanne
-
-// http://codewithawa.com/posts/admin-and-user-login-in-php-and-mysql-database
+session_start();
 
 //connect to database
 include ("config.php");
