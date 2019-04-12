@@ -37,6 +37,9 @@ if (isset($_POST['register'])) {
     if($password != $password2){
         array_push($errors,"The two passwords do not match");
     }
+    // check if input characters are valid
+
+
 
     // if there are no errors, save student to database
     if (count($errors) == 0){
