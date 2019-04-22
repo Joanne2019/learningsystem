@@ -1,0 +1,121 @@
+body{
+    font-family: "Adobe Hebrew";
+}
+.headeroption{
+    background: #9fcdff;
+    border-bottom: 2px solid #444444;
+    height: 100px;
+    color: #fff;
+    text-align: center;
+    white-space:nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+}
+
+.footeroption{
+    background:#9fcdff;
+    color:#6c757d;
+    text-align:center;
+    padding:20px;
+    border-top: 2px solid #444444;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+.headeroption h2{
+    margin-top:0;
+    font-family:"Adobe Hebrew";
+    font-size:44px;
+    padding-top: 20px;
+    display: inline-block;
+}
+.footeroption h2{
+    margin-top:0;
+    font-size:24px;
+    font-family:"Adobe Hebrew";
+}
+
+
+
+form {
+    width: 30%;
+    margin: 100px auto;
+    padding: 30px;
+    border: 1px solid #555;
+}
+input {
+    width: 100%;
+    border: 1px solid #f1e1e1;
+    display: block;
+    padding: 5px 10px;
+}
+button {
+    padding: 10px;
+    border-radius: 5px;
+}
+table {
+    width: 60%;
+    border-collapse: collapse;
+    margin: 100px auto;
+}
+th,
+td {
+    height: 50px;
+    vertical-align: center;
+    border: 1px solid black;
+}
+
+.maincontent {
+    font-size: 18px;
+    min-height: 430px;
+    padding: 20px;
+}
+.menu{overflow:hidden;}
+/*.phpcoding{
+    width:900px; margin: 0 auto;background:#ddd;
+}*/
+.adminpanel{width: 500px;color: #999;margin: 30px auto 0;padding: 50px;border: 1px solid #ddd;}
+
+.menu ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.menu ul li{
+    display: block;
+    float: left;
+}
+.menu ul li a{
+    border: 1px solid #bdbdbd;
+    border-radius: 9px;
+    color: #444;
+    display: block;
+    margin: 9px 25px 5px;
+    padding: 1px 20px 3px;
+    text-decoration: none;
+    text-align: center;
+
+
+}
+
+.menu ul li a:hover{
+    color:#ffffff;
+    border: 1px solid black;
+    background-color:#0f6674;
+}
+.main {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #999;
+    margin-top: 10px;
+    min-height: 368px;
+    padding: 15px;
+    width: 828px;
+}
+.main h1 {
+    border-bottom: 1px dashed #ddd;
+    color: #888;
+    margin: 0 0 5px;
+    padding-bottom: 5px;
+}

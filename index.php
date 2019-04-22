@@ -9,6 +9,8 @@ if ($conn === false) {
     die("Error: Could not connect");
 }
 
+session_start();
+
 if (isset($_POST['login'])) {
     // session_start();
 
@@ -25,6 +27,7 @@ if (isset($_POST['login'])) {
     if ($resultcheck > 0) {
         while ($row = mysqli_fetch_array($result)) {
             if (password_verify($password, $row['password'])) {
+                $_SESSION['email'] = $email;
                 header("location:student_home.php");
 
             } else {

@@ -1,10 +1,10 @@
 <?php
+session_start();
 //connect to database
 include_once("config.php");
 
-if (isset($_POST['register'])) {
 
-    session_start();
+if (isset($_POST['register'])) {
 
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);

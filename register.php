@@ -53,14 +53,53 @@ if (isset($_POST['register'])) {
         $_SESSION['fname'] = $name;
         $_SESSION['success'] = "You are now logged in";
         header('location:index.php'); // redirect to home page
-
     }
 }
-
-
 ?>
 
+<?php
+//form validation
 
+// define variables and set to empty values
+$fname = $email = $surname =  "";
+$nameErr = $emailErr =  $surnameErr = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $fname = test_input($_POST["fname"]);
+    $surname = test_input($_POST["surname"]);
+    $email = test_input($_POST["email"]);
+}
+// security mechanism by stripping special characters to prevent storing special characters in database
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+// make input fields required
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["fname"])) {
+        $nameErr = "Name is required";
+    } else {
+        $fname = test_input($_POST["fname"]);
+    }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["surname"])) {
+        $surnameErr = "surname is required";
+    } else {
+        $surname = test_input($_POST["fname"]);
+    }
+
+    if (empty($_POST["email"])) {
+        $emailErr = "Email is required";
+    } else {
+        $email = test_input($_POST["email"]);
+    }
+}
+}
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -100,16 +139,18 @@ if (isset($_POST['register'])) {
             </div>
             <div class="col-sm-4">
                 <div class="segment2">
-                    <form action="register.php" method="post">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 
                         <table class="tbl">
                             <tr>
                                 <td>Name</td>
                                 <td><input name="fname" type="text" id="firstname"></td>
+                             <span class="error1">* <?php echo $nameErr;?></span>
                             </tr>
                             <tr>
                                 <td>Surname</td>
                                 <td><input name="surname" type="text" id="surname"></td>
+                                <span class="error1">* <?php echo $surnameErr;?></span>
                             </tr>
                             <tr>
                                 <td>Course</td>
@@ -117,15 +158,16 @@ if (isset($_POST['register'])) {
                             </tr>
                             <tr>
                                 <td>Phone</td>
-                                <td><input name="phone" type="int" id="phone"></td>
+                                <td><input name="phone" type="number" pattern="^[0-9]" min="0"  maxlength="12" id="phone"></td>
                             </tr>
                             <tr>
                                 <td>Email</td>
-                                <td><input name="email" type="text" id="email"></td>
+                                <td><input name="email" type="text" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></td>
+                                <span class="error1">* <?php echo $emailErr;?></span>
                             </tr>
                             <tr>
                                 <td>Password </td>
-                                <td><input name="password" type="password" id="password"></td>
+                                <td><input name="password" type="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"></td>
                             </tr>
                             <tr>
                                 <td>Confirm Password </td>

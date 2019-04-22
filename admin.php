@@ -1,5 +1,4 @@
 <?php                //Admin login details ---- email = joanne@gmail.com  ----->password = joanne
-session_start();
 
 //connect to database
 include ("config.php");
@@ -8,8 +7,15 @@ include ("config.php");
 if ($conn === false) {
     die("Error: Could not connect");
 }
+session_start();
+
+// check session
+ /*if(isset($_SESSION['email'])) { // if already login
+    header("location:admin_home.php"); // send to home page
+} */
 
 if(isset($_POST['login'])){
+
     $email = mysqli_real_escape_string($conn,$_POST['email']);
     $password = mysqli_real_escape_string($conn,$_POST['password']);
 
@@ -22,7 +28,9 @@ if(isset($_POST['login'])){
     if ($resultcheck > 0) {
         while ($row = mysqli_fetch_array($result)) {
             if (password_verify($password, $row['password'])) {
+                $_SESSION['email'] = $email;
                 header("location:admin_home.php");
+
             } else {
                 echo "Error, Login failed";
             }
@@ -52,13 +60,13 @@ if(isset($_POST['login'])){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="CSS/js/bootstrap.bundle.min.js"></script>
 
-    <title>E-Learning System</title>
+    <title>Admin</title>
 
 </head>
 <body>
 
 <header class="headeroption">
-    <h2>Welcome to Intranet Systems Learning Guide</h2>
+    <h2>Intranet Systems Learning Guide</h2>
 </header>
 
 <div class="container-fluid">
@@ -69,11 +77,10 @@ if(isset($_POST['login'])){
         <h1>E-Learning System - Administrator</h1>
 
 
-
         <div class="row">
             <div class="col-sm-6"
             <div class="segment1">
-                <img src="images/admin.jpg" height="245" style=" position: relative; left: 30%;">
+                <img src="images/admin.jpg" alt="admin icon" height="245" style=" position: relative; left: 30%;">
             </div>
             <div class="col-sm-6">
                 <div class="segment2">
@@ -102,9 +109,9 @@ if(isset($_POST['login'])){
                 </div>
             </div>
         </div>
-
+        </div>
+        </div>
     </div>
-</div>
 
 <footer class="footeroption">
     <h2> Best of luck in this course!</h2>
