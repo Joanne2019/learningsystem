@@ -2,6 +2,7 @@
 //database connection
 include ("config.php");
 $conn = mysqli_connect('CSDM-WEBDEV', '1800903', '1800903', 'db1800903_elearningsystem');
+//$conn = mysqli_connect('localhost', 'root', '', 'db1800903_elearningsystem');
 
 $sql = "SELECT * FROM files";
 $result = mysqli_query($conn, $sql);
@@ -42,11 +43,11 @@ if (isset($_POST['save'])) { // if save button on the form is clicked
 }
 
 // Downloads files
-if (isset($_GET['file_id'])) {
-    $id = $_GET['file_id'];
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
     // fetch file to download from database
-    $sql = "SELECT * FROM files WHERE id=$id";
+    $sql = "SELECT * FROM files WHERE file_id=$id";
     $result = mysqli_query($conn, $sql);
 
     $file = mysqli_fetch_assoc($result);
@@ -64,7 +65,7 @@ if (isset($_GET['file_id'])) {
 
         // Now update downloads count
         $newCount = $file['downloads'] + 1;
-        $updateQuery = "UPDATE files SET downloads=$newCount WHERE id=$id";
+        $updateQuery = "UPDATE files SET downloads=$newCount WHERE file_id=$id";
         mysqli_query($conn, $updateQuery);
         exit;
     }

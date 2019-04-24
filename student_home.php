@@ -61,7 +61,7 @@ if(!isset($_SESSION['email'])) { //if not yet logged in
                                 <td><?php echo $file['name']; ?></td>
                                 <td><?php echo floor($file['size'] / 1000) . ' KB'; ?></td>
                                 <td><?php echo $file['downloads']; ?></td>
-                                <td><a href="student_home.php?file_id=<?php echo $file['id'] ?>">Download</a></td>
+                                <td><a href="student_home.php?id=<?php echo $file['file_id'] ?>">Download</a></td>
                             </tr>
                         <?php endforeach;?>
 
